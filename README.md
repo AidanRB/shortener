@@ -20,14 +20,21 @@ shortens links. deploys to cloudflare workers.
     - click "edit code" at the top right of the page
     - paste the contents of [index.ts](https://github.com/AidanRB/shortener/blob/main/index.ts) into index.ts
 
-## usage (manual)
-to create a link, send a POST request to the domain from step 2:
+## usage
+
+### web interface
+- open the domain from step 2
+- enter your long url and key
+- click shorten
+
+### http request
+send a POST request to the domain from step 2
 - headers `Content-Type: application/json`
 - body `{"your_key_here":"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}`
 
 example: `curl "https://link.example.com/" -X POST -H "Content-Type: application/json" --data '{"superSecretKey":"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}'`
 
-## usage ([tools.hcps.win](https://tools.hcps.win/qrlabels))
+### [tools.hcps.win](https://tools.hcps.win/qrlabels)
 - enter urls in "URL for QR" spaces
 - enter your domain in "URL shortener URL"
 - enter your key in "URL shortener key"

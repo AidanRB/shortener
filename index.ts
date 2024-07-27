@@ -34,6 +34,56 @@ function isValidHttpUrl(string: string): boolean {
 	return url.protocol === "http:" || url.protocol === "https:";
 }
 
+const indexpage = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shortener</title>
+</head>
+<body>
+    <script>
+        function shorten() {
+            const url = document.getElementById('url').value;
+            const key = document.getElementById('key').value;
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: '{"' + key + '":"' + url + '"}'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('output').style.color = 'red';
+                    document.getElementById('output').innerText = data.error;
+                } else {
+                    document.getElementById('output').style.color = '';
+                    document.getElementById('output').innerText = data.link;
+                }
+            });
+        }
+    </script>
+    <style>
+        html {
+            font-family: sans-serif;
+            background: #222;
+            color: #fff;
+        }
+		input, button {
+			margin-bottom: 10px;
+		}
+    </style>
+    <form action="" method="post">
+        <input type="text" name="url" id="url" placeholder="url"><br>
+        <input type="password" name="key" id="key" placeholder="key"><br>
+        <button type="button" onclick="shorten()">shorten</button>
+    </form>
+    <span id="output"></span>
+</body>
+</html>`
+
 interface ShortenRequest {
 	[key: string]: string
 }
@@ -63,8 +113,8 @@ export default {
 
 			// Ensure the request has a link
 			if (requestData[env.key] == null) {
-				return new Response('{"error": "Missing link"}', {
-					status: 400,
+				return new Response('{"error": "Incorrect key"}', {
+					status: 401,
 					headers: headersJSON,
 				})
 			}
@@ -88,9 +138,17 @@ export default {
 
 		// Return the link if it exists
 		if (request.method == 'GET') {
+			let short = request.url.split('/').pop()!
+
+			if (short == '') {
+				return new Response(indexpage, {
+					headers: headersHTML,
+				})
+			}
+
 			let value;
 			try {
-				value = await env.links.get(request.url.split('/').pop()!)
+				value = await env.links.get(short)
 			} catch (error) {
 				return new Response(env.errorpage, {
 					headers: headersHTML,
