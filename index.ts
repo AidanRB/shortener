@@ -81,7 +81,7 @@ export default {
 			await env.links.put(short, requestData[env.key])
 
 			// Return the shortened link
-			return new Response('{"link": "https://link.hcps.win/' + short + '"}', {
+			return new Response('{"link": "https://' + env.domain + '/' + short + '"}', {
 				headers: headersJSON,
 			})
 		}
