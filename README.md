@@ -6,6 +6,7 @@ shortens links. deploys to cloudflare workers. 5 (relatively) simple steps.
     you can name it anything, for example `shortened-links`
 2. [create a worker](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create)
     - choose hello world
+    - the name will be part of your domain unless you have a custom domain, so mind the length; `shortener` is fine
     - deploy
 3. add/find your worker's domain  
     either:
