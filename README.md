@@ -8,33 +8,37 @@ shortens links. deploys to cloudflare workers. 5 (relatively) simple steps.
     - choose hello world
     - the name will be part of your domain unless you have a custom domain, so mind the length; `shortener` is fine
     - deploy
+    - continue to project
 3. add/find your worker's domain  
     either:
     - add a custom domain in the worker's settings > triggers > custom domains
     - take note of the domain in the worker's settings > triggers > routes
 4. configure the worker in its settings > variables
     - add these environment variables
-        - `domain`: the domain from step 2, either custom or from the routes  
+        - `domain` = the domain from step 3, either custom or from the routes  
             example: `link.example.com` or `short.cloudflare-###.workers.dev`
-        - `errorpage`: html for the not found page  
+        - `errorpage` = html for the not found page  
             example: `<html><body>Please email <a href="mailto:email@example.com">email@example.com</a></body></html>`
-        - `key`: the secret key name for creating links  
+        - `key` = the secret key name for creating links  
             example: `superSecretKey`
+        - click deploy
     - add a kv namespace binding
-        - `links`: your created kv namespace
+        - `links` = your created kv namespace
+        - click deploy
 5. add the worker's code
     - click "edit code" at the top right of the page
-    - paste the contents of [index.ts](https://github.com/AidanRB/shortener/blob/main/index.ts) into index.ts
+    - paste the contents of [worker.js](https://github.com/AidanRB/shortener/blob/main/worker.js) into worker.js
+    - click "deploy" at the top right
 
 ## usage
 
 ### web interface
-- open the domain from step 2
+- open the domain from step 3
 - enter your long url and key
 - click shorten
 
 ### http request
-send a POST request to the domain from step 2
+send a POST request to the domain from step 3
 - headers `Content-Type: application/json`
 - body `{"your_key_here":"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}`
 
