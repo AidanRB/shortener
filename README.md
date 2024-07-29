@@ -2,13 +2,13 @@
 shortens links. deploys to cloudflare workers. 5 (relatively) simple steps.
 
 ## deployment (no wrangler)
-1. log into cloudflare and [create a kv namespace](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) to hold shortened links  
-    you can name it anything, for example `shortened-links`
-2. [create a worker](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create)
+1. log into cloudflare and [create a worker](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create)
     - choose hello world
     - the name will be part of your domain unless you have a custom domain, so mind the length; `shortener` is fine
     - deploy
     - continue to project
+1. [create a kv namespace](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) to hold shortened links  
+    you can name it anything, for example `shortened-links`
 3. add/find your worker's domain  
     either:
     - add a custom domain in the worker's settings > triggers > custom domains
